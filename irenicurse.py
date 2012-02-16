@@ -139,9 +139,6 @@ class FullListWidget(ListWidget):
 
 
 class TestFullListWidget(FullListWidget):
-    def __init__(self):
-        FullListWidget.__init__(self, "ceci est une liste de test".split())
-
     @FullListWidget.link_to_key("a")
     def testeu(self):
         self.call(TestFullListWidget("ceci est du chocolat au lait".split()))
@@ -169,7 +166,7 @@ class TestFullListWidget(FullListWidget):
 
 class TestMenuWidget(FullListWidget):
     widgets_to_test = (
-         ("FullListWidget", TestFullListWidget),
+         ("FullListWidget", (TestFullListWidget, "ceci est une liste de test".split())),
     )
 
     def __init__(self):
@@ -177,7 +174,9 @@ class TestMenuWidget(FullListWidget):
 
     @FullListWidget.link_to_key("enter")
     def test_widget(self):
-        self.call(dict(self.widgets_to_test)[self.get_current_item()]())
+        data = dict(self.widgets_to_test)[self.get_current_item()]
+        class_to_spawn = data[0]
+        self.call(class_to_spawn(data[1][1:]))
 
 
 def run(widget, palette=None):
