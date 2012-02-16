@@ -135,6 +135,9 @@ class FullListWidget(ListWidget):
 
 
 class TestFullListWidget(FullListWidget):
+    def __init__(self):
+        FullListWidget.__init__(self, "ceci est une liste de test".split())
+
     @FullListWidget.link_to_key("a")
     def testeu(self):
         self.call(TestFullListWidget("ceci est du chocolat au lait".split()))
@@ -160,6 +163,19 @@ class TestFullListWidget(FullListWidget):
         self.insert("caca pouet pouet")
 
 
+class TestMenuWidget(FullListWidget):
+    widgets_to_test = (
+         ("FullListWidget", TestFullListWidget),
+    )
+
+    def __init__(self):
+        FullListWidget.__init__(self, zip(*self.widgets_to_test)[0])
+
+    @FullListWidget.link_to_key("enter")
+    def test_widget(self):
+        self.call(dict(self.widgets_to_test)[self.get_current_item()]())
+
+
 def run(widget, palette=None):
     if palette is None:
         palette = [
@@ -171,6 +187,6 @@ def run(widget, palette=None):
 
 if __name__ == "__main__":
     logging.debug("[main] start")
-    run(TestFullListWidget(map(unicode, range(10))))
+    run(TestMenuWidget())
     logging.debug("[main] end")
     logging.debug("\n" * 200)
