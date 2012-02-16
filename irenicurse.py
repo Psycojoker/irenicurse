@@ -104,6 +104,9 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
     def get_current_position(self):
         return self.get_focus()[1]
 
+    def get_current_item(self):
+        return self.get_focus()[0]._original_widget.get_text()[0]
+
     def insert(self, new_item, position=None):
         if position is None:
             position = self.get_current_position()
