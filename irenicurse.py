@@ -40,7 +40,8 @@ class BaseWidgetClass(object):
     @classmethod
     def link_to_key(klass, key):
         def decorate(func):
-            logging.debug("[link_to_key] link key %s on method %s of %s" % ([key], func, klass))
+            logging.debug("[link_to_key] link key %s on method %s of %s" %
+                          ([key], func, klass))
             klass.keys[key] = func
             return func
         return decorate
@@ -48,7 +49,8 @@ class BaseWidgetClass(object):
     def manage_input(self, input):
         logging.debug("[%s] receive input: %s" % (self.__class__, input))
         if self.keys.get(input):
-            logging.debug("[%s] execute corresponding function: %s" % (self.__class__, self.keys[input]))
+            logging.debug("[%s] execute corresponding function: %s" %
+                          (self.__class__, self.keys[input]))
             self.keys[input](self)
         else:
             logging.debug("[%s] drop input" % self.__class__)
@@ -97,7 +99,8 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
     def delete(self, position=None):
         if position is None:
             position = self.get_current_position()
-        logging.debug("[%s] going to delete item at position: %s" % (self.__class__, position))
+        logging.debug("[%s] going to delete item at position: %s" %
+                      (self.__class__, position))
         if position is not None:
             self.content.pop(position)
 
@@ -112,7 +115,8 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
             position = self.get_current_position()
             if position is None:
                 position = 0
-        logging.debug("[%s] going to insert item at position: %s" % (self.__class__, position))
+        logging.debug("[%s] going to insert item at position: %s" %
+                      (self.__class__, position))
         self.content.insert(position, self.convert_new_item(new_item))
 
 
