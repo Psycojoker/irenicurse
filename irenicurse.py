@@ -142,7 +142,7 @@ class TestFullListWidget(FullListWidget):
 
     @FullListWidget.link_to_key("d")
     def test_delete(self):
-        self.delete(self.get_focus()[1])
+        self.delete(self.get_current_position())
 
     @FullListWidget.link_to_key("z")
     def test_append(self):
