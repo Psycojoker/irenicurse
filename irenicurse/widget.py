@@ -9,23 +9,23 @@ def link_to_key(key):
 
 class BaseWidgetClass(object):
     def __init__(self):
-        keys = {}
+        _keybindings = {}
         for x in dir(self):
             i = getattr(self, x)
             logging.debug("%s" % i)
             if hasattr(i, "__keys__"):
                 for j in i.__keys__:
-                    keys[j] = i
-        if keys:
-            logging.debug("%s has keys: %s" % (self, keys))
-            self.keys = keys
+                    _keybindings[j] = i
+        if _keybindings:
+            logging.debug("%s has _keybindings: %s" % (self, _keybindings))
+            self._keybindings = _keybindings
 
     def manage_input(self, input):
         logging.debug("[%s] receive input: %s" % (self.__class__, input))
-        if self.keys.get(input) and hasattr(self, self.keys[input].func_name):
+        if self._keybindings.get(input) and hasattr(self, self._keybindings[input].func_name):
             logging.debug("[%s] execute corresponding function: %s" %
-                          (self.__class__, self.keys[input]))
-            self.keys[input]()
+                          (self.__class__, self._keybindings[input]))
+            self._keybindings[input]()
         else:
             logging.debug("[%s] drop input" % self.__class__)
 
