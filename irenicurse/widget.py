@@ -1,37 +1,5 @@
 import logging
 import urwid
-from os.path import expanduser
-
-logging.basicConfig(filename=expanduser("~/.irenicurse.log"))
-logging.root.setLevel(logging.DEBUG)
-
-class ApplicationStack(urwid.Frame):
-    def __init__(self, widget):
-        urwid.Frame.__init__(self, widget)
-        logging.debug("[Stack] init with widget: %s" % widget)
-        self.stack = []
-        self.push(widget)
-
-    def push(self, widget):
-        logging.debug("[Stack] push on stack the widget: %s" % widget)
-        widget.attach_to_stack(self)
-        self.set_body(widget)
-        self.stack.append(widget)
-
-    def manage_input(self, input):
-        logging.debug("[Stack] reicive input: %s" % [input])
-        logging.debug("[Stack] deleguate input to top widget: %s" % self.stack[-1])
-        self.stack[-1].manage_input(input)
-
-    def pop(self):
-        logging.debug("[Stack] pop top widget")
-        self.stack = self.stack[:-1]
-        if not self.stack:
-            logging.debug("[Stack] stack empty, exit main loop, bye bye")
-            raise urwid.ExitMainLoop()
-        else:
-            self.set_body(self.stack[-1])
-
 
 class BaseWidgetClass(object):
     # I think this will create bugs
@@ -48,7 +16,7 @@ class BaseWidgetClass(object):
 
     def manage_input(self, input):
         logging.debug("[%s] receive input: %s" % (self.__class__, input))
-        if self.keys.get(input):
+        if self.keys.get(input) and hasattr(self, self.keys[input].func_name):
             logging.debug("[%s] execute corresponding function: %s" %
                           (self.__class__, self.keys[input]))
             self.keys[input](self)
@@ -136,60 +104,3 @@ class FullListWidget(ListWidget):
     def go_up(self):
         ListWidget.go_up(self)
         logging.debug("%s" % [self.get_focus()])
-
-
-class TestFullListWidget(FullListWidget):
-    @FullListWidget.link_to_key("a")
-    def testeu(self):
-        self.call(TestFullListWidget("ceci est du chocolat au lait".split()))
-
-    @FullListWidget.link_to_key("r")
-    def testeu2(self):
-        self.call(TestFullListWidget("taratata pouet pouet".split()))
-
-    @FullListWidget.link_to_key("d")
-    def test_delete(self):
-        self.delete(self.get_current_position())
-
-    @FullListWidget.link_to_key("z")
-    def test_append(self):
-        self.append("qsd qsd")
-
-    @FullListWidget.link_to_key("e")
-    def show_focus(self):
-        logging.debug("%s" % [self.get_focus()])
-
-    @FullListWidget.link_to_key("t")
-    def test_insert(self):
-        self.insert("caca pouet pouet")
-
-
-class TestMenuWidget(FullListWidget):
-    widgets_to_test = (
-         ("FullListWidget", (TestFullListWidget, "ceci est une liste de test".split())),
-    )
-
-    def __init__(self):
-        FullListWidget.__init__(self, zip(*self.widgets_to_test)[0])
-
-    @FullListWidget.link_to_key("enter")
-    def test_widget(self):
-        data = dict(self.widgets_to_test)[self.get_current_item()]
-        class_to_spawn = data[0]
-        self.call(class_to_spawn(data[1][1:]))
-
-
-def run(widget, palette=None):
-    if palette is None:
-        palette = [
-            ('reveal focus', 'black', 'white', 'standout'),
-        ]
-    stack = ApplicationStack(widget)
-    urwid.MainLoop(stack, unhandled_input=stack.manage_input, palette=palette).run()
-
-
-if __name__ == "__main__":
-    logging.debug("[main] start")
-    run(TestMenuWidget())
-    logging.debug("[main] end")
-    logging.debug("\n" * 200)
