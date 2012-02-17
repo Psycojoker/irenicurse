@@ -46,5 +46,5 @@ class TestMenuWidget(FullListWidget):
 if __name__ == "__main__":
     logging.debug("[main] start")
     run(TestMenuWidget())
-    logging.debug("[main] end")
+    logging.debug("[main] end\n------------------------------\n\n\n")
     logging.debug("\n" * 200)
