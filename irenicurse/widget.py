@@ -1,25 +1,31 @@
 import logging
 import urwid
 
-class BaseWidgetClass(object):
-    # I think this will create bugs
-    keys = {}
+def link_to_key(key):
+    def decorate(func):
+        func.__keys__ = func.__keys__ + [key] if hasattr(func, "__keys__") else [key]
+        return func
+    return decorate
 
-    @classmethod
-    def link_to_key(klass, key):
-        def decorate(func):
-            logging.debug("[link_to_key] link key %s on method %s of %s" %
-                          ([key], func, klass))
-            klass.keys[key] = func
-            return func
-        return decorate
+class BaseWidgetClass(object):
+    def __init__(self):
+        keys = {}
+        for x in dir(self):
+            i = getattr(self, x)
+            logging.debug("%s" % i)
+            if hasattr(i, "__keys__"):
+                for j in i.__keys__:
+                    keys[j] = i
+        if keys:
+            logging.debug("%s has keys: %s" % (self, keys))
+            self.keys = keys
 
     def manage_input(self, input):
         logging.debug("[%s] receive input: %s" % (self.__class__, input))
         if self.keys.get(input) and hasattr(self, self.keys[input].func_name):
             logging.debug("[%s] execute corresponding function: %s" %
                           (self.__class__, self.keys[input]))
-            self.keys[input](self)
+            self.keys[input]()
         else:
             logging.debug("[%s] drop input" % self.__class__)
 
@@ -36,6 +42,7 @@ class BaseWidgetClass(object):
 
 class ListWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, content, index=0):
+        BaseWidgetClass.__init__(self)
         self.content = map(self.convert_new_item, content)
         urwid.ListBox.__init__(self, self.content)
         self.set_focus(index)
@@ -89,18 +96,18 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
 
 
 class FullListWidget(ListWidget):
-    @BaseWidgetClass.link_to_key("q")
+    @link_to_key("q")
     def quit(self):
         ListWidget.quit(self)
 
-    @BaseWidgetClass.link_to_key("down")
-    @BaseWidgetClass.link_to_key("j")
+    @link_to_key("down")
+    @link_to_key("j")
     def go_down(self):
         ListWidget.go_down(self)
         logging.debug("%s" % [self.get_focus()])
 
-    @BaseWidgetClass.link_to_key("up")
-    @BaseWidgetClass.link_to_key("k")
+    @link_to_key("up")
+    @link_to_key("k")
     def go_up(self):
         ListWidget.go_up(self)
         logging.debug("%s" % [self.get_focus()])

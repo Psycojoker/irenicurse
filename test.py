@@ -1,29 +1,29 @@
 import logging
-from irenicurse.widget import FullListWidget
+from irenicurse.widget import FullListWidget, link_to_key
 from irenicurse import run
 
 class TestFullListWidget(FullListWidget):
-    @FullListWidget.link_to_key("a")
+    @link_to_key("a")
     def testeu(self):
         self.call(TestFullListWidget("ceci est du chocolat au lait".split()))
 
-    @FullListWidget.link_to_key("r")
+    @link_to_key("r")
     def testeu2(self):
         self.call(TestFullListWidget("taratata pouet pouet".split()))
 
-    @FullListWidget.link_to_key("d")
+    @link_to_key("d")
     def test_delete(self):
         self.delete(self.get_current_position())
 
-    @FullListWidget.link_to_key("z")
+    @link_to_key("z")
     def test_append(self):
         self.append("qsd qsd")
 
-    @FullListWidget.link_to_key("e")
+    @link_to_key("e")
     def show_focus(self):
         logging.debug("%s" % [self.get_focus()])
 
-    @FullListWidget.link_to_key("t")
+    @link_to_key("t")
     def test_insert(self):
         self.insert("caca pouet pouet")
 
@@ -36,7 +36,7 @@ class TestMenuWidget(FullListWidget):
     def __init__(self):
         FullListWidget.__init__(self, zip(*self.widgets_to_test)[0])
 
-    @FullListWidget.link_to_key("enter")
+    @link_to_key("enter")
     def test_widget(self):
         data = dict(self.widgets_to_test)[self.get_current_item()]
         class_to_spawn = data[0]
