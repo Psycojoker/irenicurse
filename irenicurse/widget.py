@@ -47,7 +47,7 @@ class BaseWidgetClass(object):
 
 class ListWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, content, index=0):
-        logging.debug("[ListWidget] init with content: %s" % content)
+        logging.debug("[ListWidget] init with content: %s" % list(content))
         BaseWidgetClass.__init__(self)
         self.content = map(self.convert_new_item, content)
         urwid.ListBox.__init__(self, self.content)
