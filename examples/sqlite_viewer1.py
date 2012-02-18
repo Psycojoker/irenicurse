@@ -9,9 +9,9 @@ from irenicurse.widget import FullListWidget
 from irenicurse import run
 
 
-class TablesViewerWidget(FullListWidget):
+class TableListViewerWidget(FullListWidget):
     def __init__(self, database_connection):
-        logging.debug("[TablesViewerWidget] init with connection: %s" % database_connection)
+        logging.debug("[TableListViewerWidget] init with connection: %s" % database_connection)
         self.database_connection = database_connection
         FullListWidget.__init__(self, self.get_table_list())
 
@@ -30,4 +30,4 @@ if __name__ == "__main__":
     if not exists(sys.argv[1]):
         print >>sys.stderr, "file doesn't exist, stop"
 
-    run(TablesViewerWidget(sqlite3.connect(sys.argv[1])))
+    run(TableListViewerWidget(sqlite3.connect(sys.argv[1])))
