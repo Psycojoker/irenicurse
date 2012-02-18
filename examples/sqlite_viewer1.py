@@ -18,6 +18,8 @@ class TablesViewerWidget(FullListWidget):
     def get_table_list(self):
         return [x[0] for x in self.database_connection.execute("select name from sqlite_master where type = 'table';").fetchall()]
 
+    def get_title(self):
+        return "SQLite Viewer example 1"
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
