@@ -1,5 +1,5 @@
 import logging
-from irenicurse.widget import FullListWidget, link_to_key
+from irenicurse.widget import FullListWidget, link_to_key, FullColumnWidget
 from irenicurse import run
 
 class TestFullListWidget(FullListWidget):
@@ -31,6 +31,7 @@ class TestFullListWidget(FullListWidget):
 class TestMenuWidget(FullListWidget):
     widgets_to_test = (
          ("FullListWidget", (TestFullListWidget, "ceci est une liste de test".split())),
+         ("FullColumnWidget", (FullColumnWidget, ["a b c d".split(), "1 2 3 4".split(), "a z e r t y".split()])),
     )
 
     def __init__(self):
