@@ -167,3 +167,23 @@ class ColumnWidget(urwid.ListBox, BaseWidgetClass):
         if index < 0:
             index = 0
         self.set_focus(index)
+
+    def go_left(self):
+        row = self.get_focus()[0]
+        if row is None:
+            return
+        column = row.get_focus_column()
+        if column is None or column == 0:
+            return
+        column -= 1
+        row.set_focus_column(column)
+
+    def go_right(self):
+        row = self.get_focus()[0]
+        if row is None:
+            return
+        column = row.get_focus_column()
+        if column is None or column == len(row.widget_list) - 1:
+            return
+        column += 1
+        row.set_focus_column(column)
