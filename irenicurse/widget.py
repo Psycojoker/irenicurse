@@ -191,3 +191,33 @@ class ColumnWidget(urwid.ListBox, BaseWidgetClass):
             return
         column += 1
         row.set_focus_column(column)
+
+
+class FullColumnWidget(ColumnWidget):
+    @link_to_key("q")
+    def quit(self):
+        ColumnWidget.quit(self)
+
+    @link_to_key("down")
+    @link_to_key("j")
+    def go_down(self):
+        ColumnWidget.go_down(self)
+        logging.debug("%s" % [self.get_focus()])
+
+    @link_to_key("up")
+    @link_to_key("k")
+    def go_up(self):
+        ColumnWidget.go_up(self)
+        logging.debug("%s" % [self.get_focus()])
+
+    @link_to_key("left")
+    @link_to_key("h")
+    def go_left(self):
+        ColumnWidget.go_left(self)
+        logging.debug("%s" % [self.get_focus()])
+
+    @link_to_key("right")
+    @link_to_key("l")
+    def go_right(self):
+        ColumnWidget.go_right(self)
+        logging.debug("%s" % [self.get_focus()])
