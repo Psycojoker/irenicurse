@@ -56,6 +56,8 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
 
     def go_down(self):
         index = self.get_current_position()
+        if index is None:
+            return
         index += 1
         if index >= len(self.content):
             index = len(self.content) - 1
@@ -63,6 +65,8 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
 
     def go_up(self):
         index = self.get_current_position()
+        if index is None:
+            return
         index -= 1
         if index < 0:
             index = 0
