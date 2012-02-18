@@ -21,6 +21,7 @@ class TablesViewerWidget(FullListWidget):
     def get_title(self):
         return "SQLite Viewer example 1"
 
+
 if __name__ == "__main__":
     if len(sys.argv) == 1:
         print >>sys.stderr, "give the path to the database as first argument"
