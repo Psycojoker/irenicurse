@@ -12,7 +12,6 @@ class BaseWidgetClass(object):
         _keybindings = {}
         for x in dir(self):
             i = getattr(self, x)
-            logging.debug("%s" % i)
             if hasattr(i, "__keys__"):
                 for j in i.__keys__:
                     _keybindings[j] = i
