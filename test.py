@@ -40,7 +40,7 @@ class TestMenuWidget(FullListWidget):
     def test_widget(self):
         data = dict(self.widgets_to_test)[self.get_current_item()]
         class_to_spawn = data[0]
-        self.call(class_to_spawn(data[1][1:]))
+        self.call(class_to_spawn(data[1]))
 
 
 if __name__ == "__main__":
