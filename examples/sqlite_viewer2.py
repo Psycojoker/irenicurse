@@ -21,6 +21,9 @@ class TableListViewerWidget(FullListWidget):
     def get_title(self):
         return "SQLite Viewer example 2"
 
+    def get_footer(self):
+        return '"j", "k", "up", "down" to move, "q" to quit, "enter" to see the columns of the current table'
+
     @link_to_key("enter")
     def show_columns_list(self):
         self.call(TableColumnsListViewerWidget(self.database_connection, self.get_current_item()))
@@ -37,6 +40,9 @@ class TableColumnsListViewerWidget(FullListWidget):
 
     def get_title(self):
         return "Columns of table: %s" % self.table_name
+
+    def get_footer(self):
+        return '"j", "k", "up", "down" to move, "q" to return to table listing'
 
 
 if __name__ == "__main__":

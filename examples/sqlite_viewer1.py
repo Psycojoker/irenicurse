@@ -21,6 +21,9 @@ class TableListViewerWidget(FullListWidget):
     def get_title(self):
         return "SQLite Viewer example 1"
 
+    def get_footer(self):
+        return '"j", "k", "up", "down" to move, "q" to quit'
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
