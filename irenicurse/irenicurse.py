@@ -6,6 +6,7 @@ def run(widget, palette=None):
     if palette is None:
         palette = [
             ('reveal focus', 'black', 'white', 'standout'),
+            ('title', 'white', 'dark red'),
         ]
     stack = ApplicationStack(widget)
     urwid.MainLoop(stack, unhandled_input=stack.manage_input, palette=palette).run()

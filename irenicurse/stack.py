@@ -17,6 +17,7 @@ class ApplicationStack(urwid.Frame):
         widget.attach_to_stack(self)
         self.set_body(widget)
         self.stack.append(widget)
+        self.set_frame_title(widget)
 
     def manage_input(self, input):
         logging.debug("[Stack] reicive input: %s" % [input])
@@ -31,3 +32,9 @@ class ApplicationStack(urwid.Frame):
             raise urwid.ExitMainLoop()
         else:
             self.set_body(self.stack[-1])
+
+    def set_frame_title(self, widget):
+        if widget.get_title() is None:
+            return
+
+        self.set_header(urwid.AttrWrap(urwid.Text(widget.get_title()), 'title'))

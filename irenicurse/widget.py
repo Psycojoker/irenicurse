@@ -38,6 +38,8 @@ class BaseWidgetClass(object):
     def call(self, widget):
         self.stack.push(widget)
 
+    def get_title(self):
+        return None
 
 class ListWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, content, index=0):
