@@ -121,3 +121,19 @@ class FullListWidget(ListWidget):
     def go_up(self):
         ListWidget.go_up(self)
         logging.debug("%s" % [self.get_focus()])
+
+class ColumnWidget(urwid.ListBox, BaseWidgetClass):
+    def __init__(self, columns):
+        logging.debug("[ColumnWidget] constructor received data: %s" % columns)
+        #content = [('flow', x) for x in map(self.convert_new_item, columns)]
+        self.content = [urwid.Columns([self.convert_new_item(y) for y in x]) for x in columns]
+        logging.debug("[ColumnWidget] init with content: %s" % self.content)
+        urwid.ListBox.__init__(self, self.content)
+        BaseWidgetClass.__init__(self)
+
+    def convert_new_item(self, item):
+        if not isinstance(item, (urwid.Text, urwid.AttrWrap)):
+            item = urwid.Text("%s" % item)
+        if not isinstance(item, urwid.AttrWrap):
+            item = urwid.AttrWrap(item, None, 'reveal focus')
+        return item
