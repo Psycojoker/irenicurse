@@ -17,7 +17,7 @@ class BaseWidgetClass(object):
                     _keybindings[j] = i
         if _keybindings:
             logging.debug("%s has _keybindings: %s" % (self, _keybindings))
-            self._keybindings = _keybindings
+        self._keybindings = _keybindings
 
     def manage_input(self, input):
         logging.debug("[%s] receive input: %s" % (self.__class__, input))
