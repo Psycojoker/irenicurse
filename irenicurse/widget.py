@@ -137,3 +137,15 @@ class ColumnWidget(urwid.ListBox, BaseWidgetClass):
         if not isinstance(item, urwid.AttrWrap):
             item = urwid.AttrWrap(item, None, 'reveal focus')
         return item
+
+    def get_current_position(self):
+        return self.get_focus()[1]
+
+    def get_current_focus_column(self):
+        return self.get_focus()[0].get_focus_column()
+
+    def set_current_row_focus_column(self, column):
+        self.get_focus()[0].set_focus_column(column)
+
+    def get_current_column_len(self):
+        return len(self.get_focus()[0].widget_list)
