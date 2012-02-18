@@ -41,6 +41,10 @@ class BaseWidgetClass(object):
     def get_title(self):
         return None
 
+    def get_footer(self):
+        return None
+
+
 class ListWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, content, index=0):
         logging.debug("[ListWidget] init with content: %s" % content)
