@@ -5,7 +5,7 @@ sys.path.append("..")
 
 from os.path import exists
 
-from irenicurse.widget import FullListWidget, link_to_key, FullColumnWidget
+from irenicurse.widget import FullListWidget, bind_to_key, FullColumnWidget
 from irenicurse import run
 
 
@@ -24,7 +24,7 @@ class TableListViewerWidget(FullListWidget):
     def get_footer(self):
         return '"j", "k", "up", "down" to move, "q" to quit, "enter" to see the columns of the current table'
 
-    @link_to_key("enter")
+    @bind_to_key("enter")
     def show_columns_list(self):
         self.call(TableColumnsListViewerWidget(self.database_connection, self.get_current_item()))
 

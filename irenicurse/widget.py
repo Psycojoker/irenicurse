@@ -1,7 +1,7 @@
 import logging
 import urwid
 
-def link_to_key(key):
+def bind_to_key(key):
     def decorate(func):
         func.__keys__ = func.__keys__ + [key] if hasattr(func, "__keys__") else [key]
         return func
@@ -106,18 +106,18 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
 
 
 class FullListWidget(ListWidget):
-    @link_to_key("q")
+    @bind_to_key("q")
     def quit(self):
         ListWidget.quit(self)
 
-    @link_to_key("down")
-    @link_to_key("j")
+    @bind_to_key("down")
+    @bind_to_key("j")
     def go_down(self):
         ListWidget.go_down(self)
         logging.debug("%s" % [self.get_focus()])
 
-    @link_to_key("up")
-    @link_to_key("k")
+    @bind_to_key("up")
+    @bind_to_key("k")
     def go_up(self):
         ListWidget.go_up(self)
         logging.debug("%s" % [self.get_focus()])
@@ -194,30 +194,30 @@ class ColumnWidget(urwid.ListBox, BaseWidgetClass):
 
 
 class FullColumnWidget(ColumnWidget):
-    @link_to_key("q")
+    @bind_to_key("q")
     def quit(self):
         ColumnWidget.quit(self)
 
-    @link_to_key("down")
-    @link_to_key("j")
+    @bind_to_key("down")
+    @bind_to_key("j")
     def go_down(self):
         ColumnWidget.go_down(self)
         logging.debug("%s" % [self.get_focus()])
 
-    @link_to_key("up")
-    @link_to_key("k")
+    @bind_to_key("up")
+    @bind_to_key("k")
     def go_up(self):
         ColumnWidget.go_up(self)
         logging.debug("%s" % [self.get_focus()])
 
-    @link_to_key("left")
-    @link_to_key("h")
+    @bind_to_key("left")
+    @bind_to_key("h")
     def go_left(self):
         ColumnWidget.go_left(self)
         logging.debug("%s" % [self.get_focus()])
 
-    @link_to_key("right")
-    @link_to_key("l")
+    @bind_to_key("right")
+    @bind_to_key("l")
     def go_right(self):
         ColumnWidget.go_right(self)
         logging.debug("%s" % [self.get_focus()])
