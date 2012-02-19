@@ -42,7 +42,7 @@ class TableColumnsListViewerWidget(FullColumnWidget):
         return "Columns of table: %s" % self.table_name
 
     def get_footer(self):
-        return '"j", "k", "up", "down" to move, "q" to return to table listing'
+        return '"j", "k", "up", "down", "h", "left", "l", "right" to move, "q" to return to table listing'
 
 
 if __name__ == "__main__":
