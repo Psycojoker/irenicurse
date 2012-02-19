@@ -126,7 +126,7 @@ class ColumnWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, columns):
         logging.debug("[ColumnWidget] constructor received data: %s" % columns)
         #content = [('flow', x) for x in map(self.convert_new_item, columns)]
-        self.content = [urwid.Columns([self.convert_new_item(y) for y in x]) for x in columns]
+        self.content = [urwid.Columns([self.convert_new_item(y) for y in x], dividechars=1) for x in columns]
         logging.debug("[ColumnWidget] init with content: %s" % self.content)
         urwid.ListBox.__init__(self, self.content)
         BaseWidgetClass.__init__(self)
