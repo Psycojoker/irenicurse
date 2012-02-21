@@ -1,5 +1,6 @@
 import logging
 import urwid
+import factories
 
 def bind_to_key(key):
     def decorate(func):
@@ -46,19 +47,13 @@ class BaseWidgetClass(object):
 
 
 class ListWidget(urwid.ListBox, BaseWidgetClass):
-    def __init__(self, content, index=0):
+    def __init__(self, content, factory=factories.wrap_item_into_widget, index=0):
         logging.debug("[ListWidget] init with content: %s" % list(content))
         BaseWidgetClass.__init__(self)
-        self.content = map(self.convert_new_item, content)
+        self.factory = factory
+        self.content = map(self.factory, content)
         urwid.ListBox.__init__(self, self.content)
         self.set_focus(index)
-
-    def convert_new_item(self, item):
-        if not isinstance(item, (urwid.Text, urwid.AttrWrap)):
-            item = urwid.Text(item)
-        if not isinstance(item, urwid.AttrWrap):
-            item = urwid.AttrWrap(item, None, 'reveal focus')
-        return item
 
     def go_down(self):
         index = self.get_current_position()
@@ -79,7 +74,7 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
         self.set_focus(index)
 
     def append(self, new_item):
-        self.content.append(self.convert_new_item(new_item))
+        self.content.append(self.factory(new_item))
 
     def delete(self, position=None):
         if position is None:
@@ -102,7 +97,7 @@ class ListWidget(urwid.ListBox, BaseWidgetClass):
                 position = 0
         logging.debug("[%s] going to insert item at position: %s" %
                       (self.__class__, position))
-        self.content.insert(position, self.convert_new_item(new_item))
+        self.content.insert(position, self.factory(new_item))
 
 
 class FullListWidget(ListWidget):
