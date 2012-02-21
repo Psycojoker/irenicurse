@@ -118,20 +118,13 @@ class FullListWidget(ListWidget):
         logging.debug("%s" % [self.get_focus()])
 
 class ColumnWidget(urwid.ListBox, BaseWidgetClass):
-    def __init__(self, columns):
+    def __init__(self, columns, factory=factories.wrap_line_into_column):
         logging.debug("[ColumnWidget] constructor received data: %s" % columns)
-        #content = [('flow', x) for x in map(self.convert_new_item, columns)]
-        self.content = [urwid.Columns([self.convert_new_item(y) for y in x], dividechars=1) for x in columns]
+        self.factory = factory
+        self.content = map(self.factory, columns)
         logging.debug("[ColumnWidget] init with content: %s" % self.content)
         urwid.ListBox.__init__(self, self.content)
         BaseWidgetClass.__init__(self)
-
-    def convert_new_item(self, item):
-        if not isinstance(item, (urwid.Text, urwid.AttrWrap)):
-            item = urwid.Text("%s" % item)
-        if not isinstance(item, urwid.AttrWrap):
-            item = urwid.AttrWrap(item, None, 'reveal focus')
-        return item
 
     def get_current_position(self):
         return self.get_focus()[1]
