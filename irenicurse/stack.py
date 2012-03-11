@@ -53,11 +53,14 @@ class ApplicationStack(urwid.Frame):
         self.set_frame_footer(widget)
 
     def ask(self, text, callback):
+        self.call_on_footer(OneLineEdit(text + (" " if text != "" else ""), callback=callback))
+
+    def call_on_footer(self, widget):
         self.old_footer = self.get_footer()
-        self.set_footer(OneLineEdit(text + (" " if text != "" else ""), callback=callback))
+        self.set_footer(widget)
         self.footer.attach_to_stack(self)
         self.set_focus('footer')
 
-    def end_ask(self):
+    def end_footer_call(self):
         self.set_focus('body')
         self.set_footer(self.old_footer)

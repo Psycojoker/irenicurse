@@ -47,7 +47,8 @@ class BaseWidgetClass(object):
     def ask(self, text="", callback=None):
         if callback is None:
             raise TypeError("a callback must be supplied")
-        return self.stack.ask(text, callback=callback)
+        self.stack.ask(text, callback=callback)
+
 
 class ListWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, content, index=0):
@@ -237,5 +238,5 @@ class OneLineEdit(BaseWidgetClass, urwid.Edit):
     def keypress(self, size, key):
         if key == "enter":
             self.callback(self.edit_text)
-            self.stack.end_ask()
+            self.stack.end_footer_call()
         urwid.Edit.keypress(self, size, key)
