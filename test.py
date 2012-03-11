@@ -36,6 +36,15 @@ class TestFullListWidget(FullListWidget):
     def test_ask_input(self, text):
         self.append(text)
 
+    @bind_to_key("u")
+    def test_yes_or_no(self):
+        self.yes_or_no(u"Rajouter un élément ? [y/n]", self.test_yes_or_no_answer)
+
+    def test_yes_or_no_answer(self, answer):
+        if answer:
+            self.append("un nouvel élément !")
+
+
 class TestMenuWidget(FullListWidget):
     widgets_to_test = (
          ("FullListWidget", (TestFullListWidget, "ceci est une liste de test".split())),

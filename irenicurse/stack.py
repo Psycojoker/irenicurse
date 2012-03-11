@@ -2,7 +2,7 @@ import urwid
 import logging
 from os.path import expanduser
 
-from widget import OneLineEdit
+from widget import OneLineEdit, YesOrNoWidget
 
 logging.basicConfig(filename=expanduser("~/.irenicurse.log"))
 logging.root.setLevel(logging.DEBUG)
@@ -57,6 +57,9 @@ class ApplicationStack(urwid.Frame):
 
     def ask(self, text, callback):
         self.call_on_footer(OneLineEdit(text + (" " if text != "" else ""), callback=callback))
+
+    def yes_or_no(self, text, callback):
+        self.call_on_footer(YesOrNoWidget(text, callback))
 
     def call_on_footer(self, widget):
         self.old_footer = self.get_footer()
