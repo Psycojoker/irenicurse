@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 import logging
 from irenicurse.widget import FullListWidget, bind_to_key, FullColumnWidget
 from irenicurse import run
@@ -27,6 +29,12 @@ class TestFullListWidget(FullListWidget):
     def test_insert(self):
         self.insert("caca pouet pouet")
 
+    @bind_to_key("y")
+    def test_ask(self):
+        self.ask(u"Nom du nouvel élément:", callback=self.test_ask_input)
+
+    def test_ask_input(self, text):
+        self.append(text)
 
 class TestMenuWidget(FullListWidget):
     widgets_to_test = (

@@ -2,6 +2,8 @@ import urwid
 import logging
 from os.path import expanduser
 
+from widget import OneLineEdit
+
 logging.basicConfig(filename=expanduser("~/.irenicurse.log"))
 logging.root.setLevel(logging.DEBUG)
 
@@ -49,3 +51,13 @@ class ApplicationStack(urwid.Frame):
     def update_title_and_footer(self, widget):
         self.set_frame_title(widget)
         self.set_frame_footer(widget)
+
+    def ask(self, text, callback):
+        self.old_footer = self.get_footer()
+        self.set_footer(OneLineEdit(text + (" " if text != "" else ""), callback=callback))
+        self.footer.attach_to_stack(self)
+        self.set_focus('footer')
+
+    def end_ask(self):
+        self.set_focus('body')
+        self.set_footer(self.old_footer)

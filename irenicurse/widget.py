@@ -44,6 +44,8 @@ class BaseWidgetClass(object):
     def get_footer(self):
         return None
 
+    def ask(self, text="", callback=None):
+        return self.stack.ask(text, callback=callback)
 
 class ListWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, content, index=0):
@@ -221,3 +223,18 @@ class FullColumnWidget(ColumnWidget):
     def go_right(self):
         ColumnWidget.go_right(self)
         logging.debug("%s" % [self.get_focus()])
+
+
+class OneLineEdit(BaseWidgetClass, urwid.Edit):
+    def __init__(self, *args, **kwargs):
+        self.callback = kwargs["callback"]
+        del kwargs["callback"]
+        urwid.Edit.__init__(self, *args, **kwargs)
+        BaseWidgetClass.__init__(self)
+
+    def keypress(self, size, key):
+        if key == "enter":
+            if self.callback is not None:
+                self.callback(self.edit_text)
+            self.stack.end_ask()
+        urwid.Edit.keypress(self, size, key)
