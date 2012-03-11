@@ -24,7 +24,10 @@ class ApplicationStack(urwid.Frame):
     def manage_input(self, input):
         logging.debug("[Stack] reicive input: %s" % [input])
         logging.debug("[Stack] deleguate input to top widget: %s" % self.stack[-1])
-        self.stack[-1].manage_input(input)
+        if self.get_focus() == "body":
+            self.stack[-1].manage_input(input)
+        elif self.get_focus() == "footer":
+            self.footer.manage_input(input)
 
     def pop(self):
         logging.debug("[Stack] pop top widget")
