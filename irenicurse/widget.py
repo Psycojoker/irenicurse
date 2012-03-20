@@ -13,6 +13,7 @@ def bind_to_key(key):
         return func
     return decorate
 
+
 class BaseWidgetClass(object):
     def __init__(self):
         _keybindings = {}
