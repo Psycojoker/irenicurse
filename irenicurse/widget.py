@@ -15,6 +15,16 @@ def bind_to_key(key):
 
 
 class BaseWidgetClass(object):
+    """
+    The base class of every Irenicurse's widgets. Every widgets should inherit
+    from it to work has expected.
+
+    It manages all interactions with the stack.
+
+    Except if you create a new widget there should be no reasons for you to
+    interact with it.
+    """
+
     def __init__(self):
         _keybindings = {}
         for x in dir(self):
