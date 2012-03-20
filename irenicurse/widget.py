@@ -37,6 +37,10 @@ class BaseWidgetClass(object):
         self._keybindings = _keybindings
 
     def manage_input(self, input):
+        """
+        Method responsible to handle inputs and dispatch it to the current
+        focused widget.
+        """
         logging.debug("[%s] receive input: %s" % (self.__class__, input))
         if self._keybindings.get(input) and hasattr(self, self._keybindings[input].func_name):
             logging.debug("[%s] execute corresponding function: %s" %
