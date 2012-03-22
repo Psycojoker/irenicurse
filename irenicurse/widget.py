@@ -50,27 +50,60 @@ class BaseWidgetClass(object):
             logging.debug("[%s] drop input" % self.__class__)
 
     def attach_to_stack(self, stack):
+        """
+        Uses by the stack to attach itself to the widget.
+        """
         logging.debug("[%s] attach self to stack: %s" % (self.__class__, stack))
         self.stack = stack
 
     def quit(self):
+        """
+        Remove itself from the stack.
+
+        By default if the stack is empty the process will end.
+        """
         self.stack.pop()
 
     def call(self, widget):
+        """
+        Push a new widget on the stack on top of itself.
+
+        Expect an Irenicurse widget (raw Urwid widget shouldn't work as expected).
+        """
         self.stack.push(widget)
 
     def get_title(self):
+        """
+        Hook to overwrite to set the title of the page.
+
+        Should return either text, an attrmap urwid widget or a text urwid widget.
+        """
         return None
 
     def get_footer(self):
+        """
+        Hook to overwrite to set the footer of the page.
+
+        Should return either text, an attrmap urwid widget or a text urwid widget.
+        """
         return None
 
     def ask(self, text="", callback=None):
+        """
+        Ask a question to the user and send its answer to the callback.
+
+        The user input ends once "enter" is pressed.
+        """
         if callback is None:
             raise TypeError("a callback must be supplied")
         self.stack.ask(text, callback=callback)
 
     def yes_or_no(self, text, callback):
+        """
+        Ask a binary question to the user and send the answer to the callback.
+
+        The user must press either the key "y" (yes) or the key "n"
+        """
         self.stack.yes_or_no(text, callback)
 
 
