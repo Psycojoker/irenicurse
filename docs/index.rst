@@ -17,22 +17,22 @@ Installation
 From source
 -----------
 
-First, get the source
+First, get the source::
 
     git clone https://github.com/Psycojoker/irenicurse
 
-Then
+Then::
 
     python setup.py install
 
 Using pip
 ---------
 
-Simply (no realse are available yet on pypi).
+Simply (no realse are available yet on pypi).::
 
     pip install git+git://github.com/Psycojoker/irenicurse.git
 
-Make sure that your version of pip is rescent enough. If you get an error, simply update it with
+Make sure that your version of pip is rescent enough. If you get an error, simply update it with::
 
     pip install -U pip
 
