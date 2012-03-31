@@ -217,6 +217,17 @@ class SectionListWidget(urwid.ListBox, BaseWidgetClass):
         self.content = self.factory(self.structured_data)
         self.body.contents = self.content[:]
 
+    def append_item(self, item):
+        current_widget = self.get_current_widget()
+        if current_widget is None:
+            return
+        if hasattr(current_widget, "ref_to_object"):
+            father = current_widget.ref_to_object.father
+        else:
+            father = self.content[self.get_current_position() - 1].ref_to_object
+        father.childs.append(SectionChild(item, father))
+        self.update()
+
     def get_current_position(self):
         return self.get_focus()[1]
 
