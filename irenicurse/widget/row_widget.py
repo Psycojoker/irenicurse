@@ -10,4 +10,4 @@ class RowTextWidget(urwid.AttrMap):
         urwid.AttrMap.__init__(self, urwid.Text(self.format_data(self.data)), None, highligh_colour)
 
     def format_data(self, text):
-        return self.prefix + text + self.suffix
+        return self.prefix + text + self.suffix if self.prefix or self.suffix else text
