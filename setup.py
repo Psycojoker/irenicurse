@@ -11,7 +11,7 @@ setup(name='irenicurse',
       author_email='cortex@worlddomination.be',
       url='http://example.com',
       install_requires=['urwid'],
-      packages=['irenicurse'],
+      packages=['irenicurse', 'irenicurse.widget'],
       license= 'GPLv3+',
       keywords='framework ncurse urwid',
      )
