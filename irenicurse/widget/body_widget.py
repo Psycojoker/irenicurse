@@ -208,3 +208,17 @@ class SectionListWidget(urwid.ListBox, BaseWidgetClass):
         self.set_focus(index)
         if not self.get_current_widget().walkable and index != len(self.content) - 1:
             self.go_down()
+
+    def append_section(self, section):
+        self.structured_data.append(Section((section, [])))
+        self.update()
+
+    def update(self):
+        self.content = self.factory(self.structured_data)
+        self.body.contents = self.content[:]
+
+    def get_current_position(self):
+        return self.get_focus()[1]
+
+    def get_current_widget(self):
+        return self.get_focus()[0]
