@@ -233,3 +233,22 @@ class SectionListWidget(urwid.ListBox, BaseWidgetClass):
 
     def get_current_widget(self):
         return self.get_focus()[0]
+
+
+class FullSectionListWidget(SectionListWidget):
+    @bind_to_key("q")
+    def quit(self):
+        SectionListWidget.quit(self)
+
+    @bind_to_key("down")
+    @bind_to_key("j")
+    def go_down(self):
+        SectionListWidget.go_down(self)
+        logging.debug("%s" % [self.get_focus()])
+
+    @bind_to_key("up")
+    @bind_to_key("k")
+    def go_up(self):
+        """foobar"""
+        SectionListWidget.go_up(self)
+        logging.debug("%s" % [self.get_focus()])
