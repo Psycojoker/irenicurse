@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import logging
-from irenicurse.widget import FullListWidget, bind_to_key, FullColumnWidget
+from irenicurse.widget import FullListWidget, bind_to_key, FullColumnWidget, FullSectionListWidget
 from irenicurse import run
 
 class TestFullListWidget(FullListWidget):
@@ -45,10 +45,20 @@ class TestFullListWidget(FullListWidget):
             self.append("un nouvel élément !")
 
 
+class TestFullSectionListWidget(FullSectionListWidget):
+    @bind_to_key("a")
+    def test_append_section(self):
+        self.append_section("pouet")
+
+    @bind_to_key("z")
+    def test_append_item(self):
+        self.append_item("qsd")
+
 class TestMenuWidget(FullListWidget):
     widgets_to_test = (
          ("FullListWidget", (TestFullListWidget, "ceci est une liste de test".split())),
          ("FullColumnWidget", (FullColumnWidget, ["a b c d".split(), "1 2 3 4".split(), "a z e r t y".split()])),
+         ("FullSectionListWidget", (TestFullSectionListWidget, (("pouet", ("a", "b", "c")), ("hophop", ("1", "2", "3")), ("empty", [])))),
     )
 
     def __init__(self):
