@@ -5,6 +5,7 @@ import factories
 from base import BaseWidgetClass
 from decorator import bind_to_key
 
+
 class ListWidget(urwid.ListBox, BaseWidgetClass):
     def __init__(self, content, factory=factories.wrap_item_into_widget, index=0):
         logging.debug("[ListWidget] init with content: %s" % list(content))
