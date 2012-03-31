@@ -4,6 +4,7 @@ import logging
 import factories
 from base import BaseWidgetClass
 from decorator import bind_to_key
+from section_widget_data_structures import Section, SectionList, SectionChild
 
 
 class ListWidget(urwid.ListBox, BaseWidgetClass):
@@ -176,3 +177,12 @@ class FullColumnWidget(ColumnWidget):
         logging.debug("%s" % [self.get_focus()])
 
 
+class SectionListWidget(urwid.ListBox, BaseWidgetClass):
+    def __init__(self, content, factory=factories.section_list_factory, index=1):
+        logging.debug("[SectionListWidget] init with content: %s" % list(content))
+        BaseWidgetClass.__init__(self)
+        self.structured_data = SectionList(content)
+        self.factory = factory
+        self.content = self.factory(self.structured_data)
+        urwid.ListBox.__init__(self, self.content)
+        self.set_focus(index)
