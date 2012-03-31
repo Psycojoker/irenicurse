@@ -186,3 +186,25 @@ class SectionListWidget(urwid.ListBox, BaseWidgetClass):
         self.content = self.factory(self.structured_data)
         urwid.ListBox.__init__(self, self.content)
         self.set_focus(index)
+
+    def go_up(self):
+        index = self.get_current_position()
+        if index is None:
+            return
+        index -= 1
+        if index < 1:
+            index = 1
+        self.set_focus(index)
+        if not self.get_current_widget().walkable and index != 1:
+            self.go_up()
+
+    def go_down(self):
+        index = self.get_current_position()
+        if index is None:
+            return
+        index += 1
+        if index >= len(self.content):
+            index = len(self.content) - 1
+        self.set_focus(index)
+        if not self.get_current_widget().walkable and index != len(self.content) - 1:
+            self.go_down()
