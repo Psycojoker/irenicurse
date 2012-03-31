@@ -43,13 +43,13 @@ class ApplicationStack(urwid.Frame):
         if widget.get_title() is None:
             return
 
-        self.set_header(urwid.AttrWrap(urwid.Text(widget.get_title()), 'title'))
+        self.set_header(urwid.AttrMap(urwid.Text(widget.get_title()), 'title'))
 
     def set_frame_footer(self, widget):
         if widget.get_footer() is None:
             return
 
-        self.set_footer(urwid.AttrWrap(urwid.Text(widget.get_footer()), 'title'))
+        self.set_footer(urwid.AttrMap(urwid.Text(widget.get_footer()), 'title'))
 
     def update_title_and_footer(self, widget):
         self.set_frame_title(widget)
