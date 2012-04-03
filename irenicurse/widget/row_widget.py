@@ -13,6 +13,8 @@ class RowTextWidget(urwid.AttrMap):
     def format_data(self, text):
         return self.prefix + text + self.suffix if self.prefix or self.suffix else text
 
+    def update(self):
+        self.original_widget.set_text(self.format_data(self.data))
 
 class RowSectionTextWidget(RowTextWidget):
     def __init__(self, wrapped_data, *args, **kwargs):
