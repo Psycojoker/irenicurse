@@ -51,13 +51,18 @@ class BaseWidgetClass(object):
         """
         self.stack.pop()
 
-    def call(self, widget):
+    def call(self, widget, callback=None):
         """
         Push a new widget on the stack on top of itself.
 
         Expect an Irenicurse widget (raw Urwid widget shouldn't work as expected).
         """
+        self.stack.stack[-1].__callback__ = callback
         self.stack.push(widget)
+
+    def answer(self, *args, **kwargs):
+        self.stack.pop()
+        self.stack.stack[-1].__callback__(*args, **kwargs)
 
     def replace(self, widget):
         """
