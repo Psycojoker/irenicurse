@@ -59,6 +59,14 @@ class BaseWidgetClass(object):
         """
         self.stack.push(widget)
 
+    def replace(self, widget):
+        """
+        Replace self on stack with a new widget.
+
+        Expect an Irenicurse widget (raw Urwid widget shouldn't work as expected).
+        """
+        self.stack.replace(widget)
+
     def get_title(self):
         """
         Hook to overwrite to set the title of the page.

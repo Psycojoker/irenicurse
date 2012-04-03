@@ -21,6 +21,13 @@ class ApplicationStack(urwid.Frame):
         self.stack.append(widget)
         self.update_title_and_footer(widget)
 
+    def replace(self, widget):
+        logging.debug("[Stack] replace top wiget on stack: %s" % widget)
+        widget.attach_to_stack(self)
+        self.set_body(widget)
+        self.stack[-1] = widget
+        self.update_title_and_footer(widget)
+
     def manage_input(self, input):
         logging.debug("[Stack] reicive input: %s" % [input])
         logging.debug("[Stack] deleguate input to top widget: %s" % self.stack[-1])
