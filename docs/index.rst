@@ -11,6 +11,18 @@ ncurse applications. It is based on `urwid <http://excess.org/urwid/>`_, a pytho
 
 .. Note:: You can find the project repository `here <https://github.com/Psycojoker/irenicurse>`_.
 
+.. Warning:: This project is still young.
+
+             However it is pretty stable in term of bugs since it's an
+             abstraction on top of Urwid and the code API big picture shouldn't
+             change a lot (minors details are changing). What risk to limit you
+             is that there isn't a lot of content (differents widgets) yet and
+             you'll quickly need to build your own depending on what you want
+             to do.
+
+             Otherwise you can safely prototyping with it.
+
+
 Focus
 -----
 
