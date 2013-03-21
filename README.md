@@ -10,7 +10,7 @@ urwid) but lack of content and of a real documentation.
 
 # Documentation
 
-You can find it here: http://irenicurse.readthedocs.org
+You can find it here: (for the moment this is pretty much empty) http://irenicurse.readthedocs.org
 
 You can also find code example in the examples/ directory.
 
